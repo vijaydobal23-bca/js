@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    main{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    div{
+      height:100vh;
+      width:100vw;
+      background:linear-gradient(rgb(37, 179, 235),rgb(184, 7, 184),rgb(242, 162, 14));
+    }
+    
+    /* Optional: Add a transition for when the image loads */
+    img {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+    img.loaded {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>
+      Lazy loading is here
+    </h1>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam dicta et adipisci minus distinctio deserunt, voluptatem tempora, magni quas eum provident corrupti odit veritatis quis doloribus officia, sint quam accusantium.</p>
+    <div></div>
+
+    <img data-src="https://images.unsplash.com/photo-1773332611550-9f5a465b4e42?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8" alt=""/>
+
+    <div>   
+      <h1>hello</h1>   
+    </div>
+
+    <img data-src="https://images.unsplash.com/photo-1773332611550-9f5a465b4e42?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxfHx8ZW58MHx8fHx8" alt="">
+
+    <div></div>
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver(function(entries, observer){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.add("loaded");
+          observer.unobserve(img);
+        }
+      })
+    },{
+      root:null,
+      threshold:0.1,
+    })
+
+    let imgs = document.querySelectorAll("img");
+    imgs.forEach(img => {
+      observer.observe(img);
+    });
+  </script>
+</body>
+</html>
